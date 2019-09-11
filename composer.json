@@ -1,0 +1,22 @@
+{
+    "name": "tolkam/psr15-dispatcher",
+    "description": "PSR-15 middlewares dispatcher",
+    "type": "library",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Tolkam\\PSR15\\Dispatcher\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "psr/http-message": "~1.0",
+        "psr/http-server-handler": "~1.0",
+        "psr/http-server-middleware": "~1.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

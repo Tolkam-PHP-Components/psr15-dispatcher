@@ -13,12 +13,12 @@ class Dispatcher implements RequestHandlerInterface
     /**
      * @var SplQueue
      */
-    private $queue;
+    private SplQueue $queue;
     
     /**
      * @var RequestHandlerInterface
      */
-    private $requestHandler;
+    private RequestHandlerInterface $requestHandler;
     
     /**
      * @param RequestHandlerInterface $requestHandler
@@ -26,7 +26,7 @@ class Dispatcher implements RequestHandlerInterface
     private function __construct(RequestHandlerInterface $requestHandler)
     {
         $this->requestHandler = $requestHandler;
-        $this->queue = new SplQueue();
+        $this->queue = new SplQueue;
     }
     
     /**
@@ -36,9 +36,9 @@ class Dispatcher implements RequestHandlerInterface
      *
      * @return Dispatcher
      */
-    public static function create(RequestHandlerInterface $requestHandler)
+    public static function create(RequestHandlerInterface $requestHandler): Dispatcher
     {
-        return new self($requestHandler);
+        return new static($requestHandler);
     }
     
     /**
@@ -64,20 +64,21 @@ class Dispatcher implements RequestHandlerInterface
     /**
      * Puts middleware into queue
      *
-     * @param  MiddlewareInterface $middleware
+     * @param MiddlewareInterface $middleware
      *
      * @return self
      */
     public function middleware(MiddlewareInterface $middleware): self
     {
         $this->queue->enqueue($middleware);
+        
         return $this;
     }
     
     /**
      * Puts array of middlewares into queue
      *
-     * @param  array  $middlewares
+     * @param array $middlewares
      *
      * @return self
      */
@@ -98,7 +99,7 @@ class Dispatcher implements RequestHandlerInterface
         if ($this->queue->isEmpty()) {
             return $this->requestHandler->handle($request);
         }
-
+        
         return $this->queue->dequeue()->process($request, $this);
     }
 }
